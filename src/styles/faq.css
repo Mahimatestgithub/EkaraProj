@@ -1,0 +1,40 @@
+/* Center container and add padding */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    
+    border-radius: 8px;
+  
+  }
+  
+  /* Style for the main title */
+  .title {
+    font-size: 26px;
+    font-weight: bold;
+    color: #28a745;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+  
+  /* Style for each question and answer */
+  .opportunity {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .opportunity h2 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  
+  .opportunity p {
+    font-size: 16px;
+    color: #333;
+    line-height: 1.5;
+  }
+  

@@ -1,0 +1,90 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #ffffff;
+  }
+  
+  
+  header {
+    background-color: #F0FFF4;
+    padding: 20px;
+  }
+  
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .logo {
+    margin-left: 20px; 
+    border-radius: 10%;
+  }
+  
+  .logo img {
+    width: 150px;
+  }
+  
+  .nav-links {
+    list-style-type: none;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-grow: 1;
+  }
+  
+  .nav-links li a {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    transition: color 0.3s ease;
+  }
+  
+  .nav-links li a:hover {
+    color: #00b32d; 
+  }
+  
+  .nav-buttons {
+    display: flex;
+    gap: 10px;
+    align-items: ce;
+  }
+  
+  .apply-btn,
+  .login-btn,
+  .signup-btn {
+    background-color: #00d468;
+    border: none;
+    padding: 10px 20px;
+    color: white;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .apply-btn {
+    background-color: #008f25;
+  }
+  
+  .login-btn, .signup-btn {
+    background-color: transparent;
+    border: 1px solid #00d468;
+    color: #00d468;
+  }
+  
+  .apply-btn:hover {
+    background-color: #026e1f;
+  }
+  
+  .login-link, .signup-link {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+  }
+  

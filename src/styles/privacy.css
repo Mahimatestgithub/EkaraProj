@@ -1,0 +1,109 @@
+
+
+/* Main Content styles */
+.main-content {
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.main-content h1 {
+    font-size: 32px;
+    font-weight: 400;
+    line-height: 1.4;
+    color: black;
+}
+
+.main-content h1 span {
+    font-weight: 700;
+    color: #00d468;
+}
+
+.main-content hr {
+    width: 80%;
+    margin: 20px auto;
+    border: 1px solid #e0e0e0;
+}
+
+/* Section styles */
+.content-section {
+    margin-top: 40px;
+    text-align: left;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.content-section h2 {
+    font-size: 22px;
+    color: #00d468;
+    margin-bottom: 10px;
+}
+
+.content-section p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: black;
+}
+
+a {
+    text-decoration: none; /* Remove underline */
+    color: inherit; /* Optional: inherit color from parent elements */
+}
+
+/* Optional: Add hover effect for better UX */
+a:hover {
+    text-decoration: underline; /* Show underline on hover if desired */
+    color: #007bff; /* Change color on hover (optional) */
+}
+
+/* Responsive navbar */
+@media (max-width: 1064px) {
+    /* Hide the nav links and show the hamburger icon */
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 70px;
+        right: 20px;
+        background-color: #F0FFF4;
+        width: 200px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+    }
+
+    /* Show the nav links when the .show class is added */
+    .nav-links.show {
+        display: flex;
+    }
+
+    /* Style for hamburger icon */
+    .hamburger {
+        display: block;
+        cursor: pointer;
+        font-size: 24px;
+        color: #333;
+    }
+}
+
+@media (min-width: 1064px) {
+    .hamburger {
+        display: none;
+    }
+}
+
+/* Responsive nav-buttons */
+@media (max-width: 550px) {
+    .nav-buttons {
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+        align-items: center;
+        padding: 10px 0;
+    }
+
+    /* Adjust button sizing */
+    .apply-btn, .login-btn, .signup-btn {
+        width: 80%;
+        font-size: 14px;
+    }
+}
