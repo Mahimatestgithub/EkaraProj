@@ -2,12 +2,49 @@ import React, { useState, useEffect } from 'react';
 
 function Login() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+
+    const payload = { email, password };
+
+    try {
+      const response = await fetch('http://localhost:5000/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json();
+      console.log (data)
+      if (response.ok) {
+        console.log('Login successful:', data);
+        // Redirect to the dashboard or another page
+        window.location.href = '/dashboard';
+      } else {
+        console.log (data.message)
+        setError(data.message || 'Login failed. Please try again.');
+      }
+    } catch (err) {
+      setError('An error occurred. Please try again later.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const containerStyle = {
     display: 'flex',
@@ -19,7 +56,7 @@ function Login() {
 
   const boxStyle = {
     display: 'flex',
-    flexDirection: windowWidth < 384 ? 'column' : 'row', // Stack vertically for very small screens
+    flexDirection: windowWidth < 384 ? 'column' : 'row',
     width: windowWidth < 384 ? '90%' : windowWidth < 468 ? '80%' : windowWidth < 1219 ? '70%' : '40%',
     backgroundColor: 'white',
     borderRadius: '10px',
@@ -29,8 +66,8 @@ function Login() {
 
   const leftStyle = {
     backgroundColor: '#29cc56',
-    width: windowWidth < 384 ? '100%' : windowWidth < 468 ? '100%' : windowWidth < 1219 ? '50%' : '50%',
-    padding: windowWidth < 384 ? '10px' : windowWidth < 468 ? '10px' : windowWidth < 1219 ? '20px' : '40px',
+    width: windowWidth < 384 ? '100%' : '50%',
+    padding: windowWidth < 384 ? '10px' : '40px',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -38,15 +75,15 @@ function Login() {
   };
 
   const leftTextStyle = {
-    fontSize: windowWidth < 384 ? '14px' : windowWidth < 468 ? '14px' : windowWidth < 1219 ? '18px' : '24px',
+    fontSize: windowWidth < 384 ? '14px' : '24px',
     textAlign: 'center',
     lineHeight: '1.5',
     color: 'white',
   };
 
   const rightStyle = {
-    width: '100%', // Full width for smaller screens
-    padding: windowWidth < 384 ? '10px' : windowWidth < 468 ? '10px' : windowWidth < 1219 ? '20px' : '40px',
+    width: '100%',
+    padding: windowWidth < 384 ? '10px' : '40px',
     display: 'flex',
     flexDirection: 'column',
   };
@@ -64,14 +101,14 @@ function Login() {
 
   const inputStyle = {
     marginBottom: '15px',
-    padding: windowWidth < 384 ? '8px' : windowWidth < 468 ? '8px' : windowWidth < 1219 ? '10px' : '12px',
+    padding: '12px',
     border: '1px solid #ccc',
     borderRadius: '5px',
     fontSize: '14px',
   };
 
   const buttonStyle = {
-    padding: windowWidth < 384 ? '10px' : windowWidth < 468 ? '8px' : windowWidth < 1219 ? '10px' : '12px',
+    padding: '12px',
     backgroundColor: '#29cc56',
     color: 'white',
     fontSize: '16px',
@@ -99,17 +136,36 @@ function Login() {
           <h2 style={leftTextStyle}>Login to access this application</h2>
         </div>
         <div style={rightStyle}>
-          <form style={formStyle}>
-            <label htmlFor="username" style={labelStyle}>Username or e-mail</label>
-            <input type="text" id="username" name="username" style={inputStyle} />
+          <form style={formStyle} onSubmit={handleSubmit}>
+            <label htmlFor="email" style={labelStyle}>email or username</label>
+            <input
+              type="text"
+              id="email"
+              name="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              style={inputStyle}
+              required
+            />
 
             <label htmlFor="password" style={labelStyle}>Password</label>
-            <input type="password" id="password" name="password" style={inputStyle} />
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              style={inputStyle}
+              required
+            />
 
-            <button type="submit" style={buttonStyle}>Log In</button>
+            {error && <p style={{ color: 'red', marginBottom: '10px' }}>{error}</p>}
+            <button type="submit" style={buttonStyle} disabled={loading}>
+              {loading ? 'Logging in...' : 'Log In'}
+            </button>
 
             <div style={linkContainerStyle}>
-              <a href="#" style={linkStyle}>Forgot your username or password?</a>
+              <a href="#" style={linkStyle}>Forgot your email or password?</a>
               <p>Don't have an account? <a href="/signup" style={linkStyle}>Sign Up</a></p>
             </div>
           </form>
@@ -227,8 +283,8 @@ export default Login;
 //         </div>
 //         <div style={rightStyle}>
 //           <form style={formStyle}>
-//             <label htmlFor="username" style={labelStyle}>Username or e-mail</label>
-//             <input type="text" id="username" name="username" style={inputStyle} />
+//             <label htmlFor="email" style={labelStyle}>email or e-mail</label>
+//             <input type="text" id="email" name="email" style={inputStyle} />
 
 //             <label htmlFor="password" style={labelStyle}>Password</label>
 //             <input type="password" id="password" name="password" style={inputStyle} />
@@ -236,7 +292,7 @@ export default Login;
 //             <button type="submit" style={buttonStyle}>Log In</button>
 
 //             <div style={linkContainerStyle}>
-//               <a href="#" style={linkStyle}>Forgot your username or password?</a>
+//               <a href="#" style={linkStyle}>Forgot your email or password?</a>
 //               <p>Don't have an account? <a href="/signup" style={linkStyle}>Sign Up</a></p>
 //             </div>
 //           </form>
@@ -361,8 +417,8 @@ export default Login;
 //         </div>
 //         <div style={rightStyle}>
 //           <form style={formStyle}>
-//             <label htmlFor="username" style={labelStyle}>Username or e-mail</label>
-//             <input type="text" id="username" name="username" style={inputStyle} />
+//             <label htmlFor="email" style={labelStyle}>email or e-mail</label>
+//             <input type="text" id="email" name="email" style={inputStyle} />
 
 //             <label htmlFor="password" style={labelStyle}>Password</label>
 //             <input type="password" id="password" name="password" style={inputStyle} />
@@ -370,7 +426,7 @@ export default Login;
 //             <button type="submit" style={buttonStyle}>Log In</button>
 
 //             <div style={linkContainerStyle}>
-//               <a href="#" style={linkStyle}>Forgot your username or password?</a>
+//               <a href="#" style={linkStyle}>Forgot your email or password?</a>
 //               <p>Don't have an account? <a href="/signup" style={linkStyle}>Sign Up</a></p>
 //             </div>
 //           </form>
