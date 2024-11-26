@@ -60,6 +60,7 @@ function Login() {
   const boxStyle = {
     display: 'flex',
     flexDirection: windowWidth < 384 ? 'column' : 'row',
+    flexDirection: windowWidth < 384 ? 'column' : 'row',
     width: windowWidth < 384 ? '90%' : windowWidth < 468 ? '80%' : windowWidth < 1219 ? '70%' : '40%',
     backgroundColor: 'white',
     borderRadius: '10px',
@@ -71,6 +72,8 @@ function Login() {
     backgroundColor: '#29cc56',
     width: windowWidth < 384 ? '100%' : '50%',
     padding: windowWidth < 384 ? '10px' : '40px',
+    width: windowWidth < 384 ? '100%' : '50%',
+    padding: windowWidth < 384 ? '10px' : '40px',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -79,12 +82,15 @@ function Login() {
 
   const leftTextStyle = {
     fontSize: windowWidth < 384 ? '14px' : '24px',
+    fontSize: windowWidth < 384 ? '14px' : '24px',
     textAlign: 'center',
     lineHeight: '1.5',
     color: 'white',
   };
 
   const rightStyle = {
+    width: '100%',
+    padding: windowWidth < 384 ? '10px' : '40px',
     width: '100%',
     padding: windowWidth < 384 ? '10px' : '40px',
     display: 'flex',
@@ -105,12 +111,14 @@ function Login() {
   const inputStyle = {
     marginBottom: '15px',
     padding: '12px',
+    padding: '12px',
     border: '1px solid #ccc',
     borderRadius: '5px',
     fontSize: '14px',
   };
 
   const buttonStyle = {
+    padding: '12px',
     padding: '12px',
     backgroundColor: '#29cc56',
     color: 'white',
@@ -166,8 +174,23 @@ function Login() {
             <button type="submit" style={buttonStyle} disabled={loading}>
               {loading ? 'Logging in...' : 'Log In'}
             </button>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              style={inputStyle}
+              required
+            />
+
+            {error && <p style={{ color: 'red', marginBottom: '10px' }}>{error}</p>}
+            <button type="submit" style={buttonStyle} disabled={loading}>
+              {loading ? 'Logging in...' : 'Log In'}
+            </button>
 
             <div style={linkContainerStyle}>
+              <a href="#" style={linkStyle}>Forgot your email or password?</a>
               <a href="#" style={linkStyle}>Forgot your email or password?</a>
               <p>Don't have an account? <a href="/signup" style={linkStyle}>Sign Up</a></p>
             </div>
