@@ -1,7 +1,18 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 function Signup() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [formData, setFormData] = useState({
+    firstNm: '',
+    LastNm: '',
+    email: '',
+    password: '',
+    confirm_password: '',
+    linkedin_profile: '',
+  });
+  const [message, setMessage] = useState('');
+  const [error, setError] = useState('');
 
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
@@ -9,9 +20,32 @@ function Signup() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setMessage('');
+    setError('');
+    try {
+      const response = await axios.post('http://localhost:5000/signup', formData, {
+        headers: { 'Content-Type': 'application/json' },
+      });
+      setMessage(response.data.message);
+    } catch (err) {
+      if (err.response) {
+        setError(err.response.data.error || err.response.data.message);
+      } else {
+        setError('Something went wrong. Please try again later.');
+      }
+    }
+  };
+
   const containerStyle = {
     display: 'flex',
-    flexDirection: windowWidth < 784 ? 'column' : 'row', // Stack vertically on small screens
+    flexDirection: windowWidth < 784 ? 'column' : 'row',
     width: windowWidth < 784 ? '90%' : '60%',
     maxWidth: '1000px',
     backgroundColor: 'white',
@@ -39,7 +73,7 @@ function Signup() {
   };
 
   const rightBoxStyle = {
-    width: '100%', // Full width for small screens
+    width: '100%',
     padding: windowWidth < 784 ? '20px' : '10px',
     display: 'flex',
     flexDirection: 'column',
@@ -97,26 +131,29 @@ function Signup() {
         <h2 style={leftBoxTextStyle}>Sign up to access this application</h2>
       </div>
       <div style={rightBoxStyle}>
-        <form style={formStyle}>
-          <label htmlFor="firstName" style={labelStyle}>First name</label>
-          <input type="text" id="firstName" name="firstName" style={inputStyle} />
+        <form style={formStyle} onSubmit={handleSubmit}>
+          <label htmlFor="firstNm" style={labelStyle}>First name</label>
+          <input type="text" id="firstNm" name="firstNm" style={inputStyle} onChange={handleInputChange} />
 
-          <label htmlFor="lastName" style={labelStyle}>Last name</label>
-          <input type="text" id="lastName" name="lastName" style={inputStyle} />
+          <label htmlFor="LastNm" style={labelStyle}>Last name</label>
+          <input type="text" id="LastNm" name="LastNm" style={inputStyle} onChange={handleInputChange} />
 
           <label htmlFor="email" style={labelStyle}>E-mail</label>
-          <input type="email" id="email" name="email" style={inputStyle} />
+          <input type="email" id="email" name="email" style={inputStyle} onChange={handleInputChange} />
 
           <label htmlFor="password" style={labelStyle}>Password <span style={requiredStyle}>*</span></label>
-          <input type="password" id="password" name="password" style={inputStyle} />
+          <input type="password" id="password" name="password" style={inputStyle} onChange={handleInputChange} />
 
-          <label htmlFor="confirmPassword" style={labelStyle}>Re-type Password <span style={requiredStyle}>*</span></label>
-          <input type="password" id="confirmPassword" name="confirmPassword" style={inputStyle} />
+          <label htmlFor="confirm_password" style={labelStyle}>Re-type Password <span style={requiredStyle}>*</span></label>
+          <input type="password" id="confirm_password" name="confirm_password" style={inputStyle} onChange={handleInputChange} />
 
-          <label htmlFor="linkedin" style={labelStyle}>Your LinkedIn profile</label>
-          <input type="url" id="linkedin" name="linkedin" style={inputStyle} />
+          <label htmlFor="linkedin_profile" style={labelStyle}>Your LinkedIn profile</label>
+          <input type="url" id="linkedin_profile" name="linkedin_profile" style={inputStyle} onChange={handleInputChange} />
 
           <button type="submit" style={buttonStyle}>Sign Up</button>
+
+          {message && <p style={{ color: 'green', textAlign: 'center' }}>{message}</p>}
+          {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
 
           <div style={linksStyle}>
             <p>Already have an account? <a href="/login" style={linkTextStyle}>Log In</a></p>
@@ -128,6 +165,7 @@ function Signup() {
 }
 
 export default Signup;
+
 
 // import React, { useState } from 'react';
 // //import '../styles/signup.module.css';
@@ -254,5 +292,4 @@ export default Signup;
 // }
 
 // export default Signup;
-
 

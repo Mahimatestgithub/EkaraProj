@@ -22,6 +22,8 @@ import Apply1 from "./pages/apply1";
 import Apply2 from "./pages/apply2";
 import TermsOfUse from "./pages/termsofuse";
 import FAQ from "./pages/faq";
+import Dashboard from './components/Dashboard';// Create a Dashboard component if not present
+
 
 
 
@@ -65,6 +67,7 @@ function App() {
     <Header /> 
     <Routes>
       <Route path="/login" element={<Login />} /> {/* Update here */}
+      <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/signup" element={<Signup />} /> {/* Update here */}
       <Route path="/apply1" element={<Apply1 />} /> {/* Update here */}
       <Route path="/apply2" element={<Apply2 />} /> {/* Update here */}
