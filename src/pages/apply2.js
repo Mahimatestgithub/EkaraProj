@@ -53,10 +53,16 @@ function Apply2() {
     }
 
     try {
+      const token = sessionStorage.getItem('Authorization');
+      if (!token) {
+        alert("Session expired. Please login again.");
+      }
+
       // API call to submit the form data
       const response = await axios.post("http://localhost:5000/apply", data, {
         headers: {
           "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`
         },
 
 

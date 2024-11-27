@@ -5,13 +5,14 @@ import jwt
 import os
 import mysql.connector
 from werkzeug.security import generate_password_hash, check_password_hash
+from functools import wraps
 
 # Database connection setup function (using context manager)
 def get_db_connection():
     return mysql.connector.connect(
         host='localhost',
         user='root',
-        password='Ch@it@ny@sql03',
+        password='asdflkjhg',
         database='ekara'
     )
 
@@ -31,27 +32,39 @@ def after_request(response):
     response.headers['Access-Control-Allow-Headers'] = 'Authorization, Content-Type'
     return response
 
-# def token_required(func):
-#     @wraps(func)
-#     def decorated(*args, **kwargs):
-#         token = request.headers.get('Authorization')
-#         if not token:
-#             return jsonify({'Alert!': 'Token is missing!'}), 401
-#         try:
-#             token = token.split(' ')[-1]
-#             data = jwt.decode(token, app.config['SECRET_KEY'], algorithms=['HS256'])
-#             user_obj = User.query.get(data['user'])
-#             if user_obj is None:
-#                 return jsonify({'Message': 'User does not exists'}), 403
-#             else:
-#                 data['current_user'] = user_obj
-#         except jwt.ExpiredSignatureError:
-#             return jsonify({'Message': 'Token has expired'}), 401
-#         except jwt.InvalidTokenError:
-#             return jsonify({'Message': 'Invalid token'}), 403
-#         return func(user_obj, *args, **kwargs)
+def token_required(func):
+    @wraps(func)
+    def decorated(*args, **kwargs):
+        token = request.headers.get('Authorization')
+        if not token:
+            return jsonify({'Alert!': 'Token is missing!'}), 401
+        try:
+            token = token.split(' ')[-1]  # Extract the token from 'Bearer <token>'
+            data = jwt.decode(token, app.config['SECRET_KEY'], algorithms=['HS256'])
+            email = data['email']  # Assuming you're storing 'email' in the token payload
+            
+            # Query the database for user data based on email
+            conn = get_db_connection()
+            cursor = conn.cursor(dictionary=True)  # Get dictionary cursor for better results
+            cursor.execute("SELECT * FROM Users WHERE email = %s", (email,))
+            user_obj = cursor.fetchone()  # Fetch the user based on email
+            
+            if not user_obj:
+                return jsonify({'Message': 'User does not exist'}), 403
+            
+            # Optionally add user data to kwargs so that it's available in the decorated function
+            kwargs['current_user'] = user_obj
 
-#     return decorated
+        except jwt.ExpiredSignatureError:
+            return jsonify({'Message': 'Token has expired'}), 401
+        except jwt.InvalidTokenError:
+            return jsonify({'Message': 'Invalid token'}), 403
+        except Exception as e:
+            return jsonify({'Message': f'Error: {str(e)}'}), 500
+        
+        return func(*args, **kwargs)
+
+    return decorated
 
 # --- SIGNUP ROUTE ---
 @app.route("/signup", methods=["POST"])
@@ -118,11 +131,12 @@ def login():
             token = jwt.encode({'email': user[1]}, app.config['SECRET_KEY'], algorithm='HS256')
             return jsonify({
                 "message": "Login successful!",
-                "token": token,
+                "Authorization": token,
                 "user": {"email": user[1], "firstNm": user[0]}
             }), 200
         else:
             return jsonify({"error": "Invalid email or password"}), 403
+
 
     except Exception as e:
         print("Login Error:", e)
@@ -131,7 +145,8 @@ def login():
 
 # --- APPLY ROUTE ---
 @app.route("/apply", methods=["POST"])
-def apply():
+@token_required
+def apply(current_user):
     try:
         # Extract data from form
         email = request.form.get('email')
@@ -187,6 +202,33 @@ def apply():
     except Exception as e:
         print("Application Error:", e)
         return jsonify({"error": "An error occurred during application submission"}), 500
+    
+@app.route("/profile", methods=["GET"])
+@token_required
+def profile(current_user):
+    try:
+        # Extract user data from the 'current_user' passed by the token_required decorator
+        first_name = current_user['first_name']
+        last_name = current_user['last_name']
+        email = current_user['email']
+        profile_icon = current_user['profile_icon']  # Assuming profile_icon is stored in the DB
+
+        # If a profile icon exists, construct the URL to access the image
+        profile_icon_url = None
+        if profile_icon:
+            profile_icon_url = f'http://localhost:5000/{app.config["UPLOAD_FOLDER"]}/{profile_icon}'
+
+        # Returning user profile data
+        return jsonify({
+            "first_name": first_name,
+            "last_name": last_name,
+            "email": email,
+            "profile_icon_url": profile_icon_url
+        }), 200
+
+    except Exception as e:
+        print("Profile Error:", e)
+        return jsonify({"error": "An error occurred while fetching the profile"}), 500
 
 
 if __name__ == '__main__':
