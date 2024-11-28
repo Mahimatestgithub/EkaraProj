@@ -70,6 +70,7 @@ function App() {
     {/* Header globally rendered for all routes */}
     <Header /> 
     <Routes>
+      
       <Route path="/login" element={<Login />} /> {/* Update here */}
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/signup" element={<Signup />} /> {/* Update here */}
@@ -78,7 +79,7 @@ function App() {
       {/* <Route path="/loginhome" element={<HomeLogin />} /> Update here */}
       <Route
         path="/"
-        element={
+        element={ 
           <>
             <main>
                 <section className="hero">

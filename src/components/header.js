@@ -10,14 +10,14 @@ import { useContext } from "react";
 import { useAuth } from "../context/auth-context"; // Ensure you have an auth-context set up
 
 function Header() {
-  const { isLoggedIn, logout } = useAuth(); // Access login state and logout function
+  const { isLoggedIn, logout, login } = useAuth(); // Access login state and logout function
 
   // Toggle navbar function
   const toggleNavbar = () => {
     const navLinks = document.querySelector(".nav-links");
     navLinks.classList.toggle("show");
   };
-
+ console.log(isLoggedIn)
   return (
     <header>
       <nav>
@@ -38,11 +38,13 @@ function Header() {
             <>
               <button className="logout-btn" onClick={logout}>Logout</button>
               <Link to="/profile" className="profile-btn">Profile</Link>
+            <Link to="/apply1" className="apply-btn" onClick={() => console.log("Navigating to Apply")}>Apply</Link>
+
             </>
           ) : (
             <>
             <Link to="/apply1" className="apply-btn" onClick={() => console.log("Navigating to Apply")}>Apply</Link>
-              <Link to="/login" className="login-btn">Login</Link>
+              <Link to="/login"  className="login-btn">Login</Link>
               <Link to="/signup" className="signup-btn">Sign Up</Link>
             </>
           )}

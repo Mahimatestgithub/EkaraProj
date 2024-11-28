@@ -58,6 +58,8 @@
   
   .apply-btn,
   .login-btn,
+  .logout-btn,
+  .profile-btn,
   .signup-btn {
     background-color: #00d468;
     border: none;

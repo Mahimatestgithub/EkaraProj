@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
+import { useNavigate} from 'react-router-dom'; // Import useNavigate from react-router-dom
 
+import { useAuth } from "../context/auth-context";
 function Login() {
+  const{login} = useAuth();
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
 
   const navigate = useNavigate(); // Use the useNavigate hook for navigation
 
@@ -37,7 +40,8 @@ function Login() {
 
       if (response.ok) {
         console.log('Login successful:', data);
-
+        login();
+ 
         // Store the token in session storage
         sessionStorage.setItem('Authorization', data.Authorization);
 
@@ -45,10 +49,11 @@ function Login() {
         setTimeout(() => {
           sessionStorage.removeItem('Authorization');
           console.log('Token expired and removed from sessionStorage.');
-        }, 5000);
+        }, 50000);
 
         // Redirect to the login home page after successful login
-        navigate('/');  // Navigate to /loginhome
+       navigate('/');  // Navigate to /loginhome
+       
       } else {
         setError(data.message || 'Login failed. Please try again.');
       }
