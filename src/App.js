@@ -23,6 +23,9 @@ import Apply2 from "./pages/apply2";
 import TermsOfUse from "./pages/termsofuse";
 import FAQ from "./pages/faq";
 import Dashboard from './components/Dashboard';// Create a Dashboard component if not present
+// import HomeLogin from "./pages/loginhome.js";
+
+import { AuthProvider } from "./context/auth-context"; // Import AuthProvider
 
 
 
@@ -62,6 +65,7 @@ function App() {
     setIsVideoVisible(true);
   };
   return (
+    <AuthProvider> {/* Wrap the entire App with AuthProvider */}
     <Router>
     {/* Header globally rendered for all routes */}
     <Header /> 
@@ -71,6 +75,7 @@ function App() {
       <Route path="/signup" element={<Signup />} /> {/* Update here */}
       <Route path="/apply1" element={<Apply1 />} /> {/* Update here */}
       <Route path="/apply2" element={<Apply2 />} /> {/* Update here */}
+      {/* <Route path="/loginhome" element={<HomeLogin />} /> Update here */}
       <Route
         path="/"
         element={
@@ -312,6 +317,7 @@ function App() {
       {/* Footer will be rendered globally for all routes */}
       <Footer />
     </Router>
+    </AuthProvider>
   );
 }
 
