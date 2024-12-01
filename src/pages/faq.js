@@ -1,8 +1,13 @@
 import React from 'react';
 import '../styles/faq.css';
+import Header from '../components/header'
+import Footer from '../components/footer'
+
 
 const FAQ = () => {
   return (
+    <>
+    <Header/>
     <main>
       <div className="container">
         <h1 className="title">Frequently Asked Questions</h1>
@@ -18,6 +23,8 @@ const FAQ = () => {
         </div>
       </div>
     </main>
+    <Footer/>
+    </>
   );
 };
 

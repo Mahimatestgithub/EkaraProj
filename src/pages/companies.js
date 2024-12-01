@@ -1,10 +1,14 @@
 import React from 'react';
 import '../styles/companies.css';
 import { Link } from "react-router-dom";
+import Header from '../components/header'
+import Footer from '../components/footer'
  // Make sure to import the relevant CSS
 
 function CompanyPage() {
   return (
+    <>
+    <Header/>
     <main>
       <section className="apply-section">
         <h1>Apply <span>to this program</span></h1>
@@ -16,6 +20,8 @@ function CompanyPage() {
         </p>
       </section>
     </main>
+    <Footer/>
+    </>
   );
 }
 

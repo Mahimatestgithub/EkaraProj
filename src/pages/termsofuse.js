@@ -1,8 +1,11 @@
 import React from 'react';
 import '../styles/termsofuse.css';
-
+import Header from '../components/header'
+import Footer from '../components/footer'
 const TermsOfUse = () => {
     return (
+        <>
+        <Header/>
         <div className="main-content">
             <h1><span>Policies & Terms</span></h1>
             <hr />
@@ -47,6 +50,8 @@ const TermsOfUse = () => {
                 <p>If you have any questions or need further information about these Terms of Use, please contact us at <a href="mailto:team@ekara.co.in" className="green-link">team@ekara.co.in</a>.</p>
             </section>
         </div>
+        <Footer/>
+        </>
     );
 };
 

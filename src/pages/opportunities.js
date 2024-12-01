@@ -1,8 +1,12 @@
 import React from 'react';
 import '../styles/opportunities.css';
+import Header from '../components/header'
+import Footer from '../components/footer'
 
 const Opportunities = () => {
   return (
+    <>
+    <Header/>
     <div className="opportunities-container">
       <h2 className="opportunities-title">Opportunities</h2>
 
@@ -42,6 +46,8 @@ const Opportunities = () => {
         </p>
       </div>
     </div>
+    <Footer/>
+    </>
   );
 };
 

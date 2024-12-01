@@ -1,8 +1,12 @@
 import React from 'react';
 import '../styles/essay1.css';
+import Header from '../components/header'
+import Footer from '../components/footer'
 
 const Essay3 = () => {
   return (
+    <>
+    <Header/>
     <div className="essay1-container">
       <h1>How to Check Whether the Idea is Good or Not?</h1><hr></hr>
       <div className="essay-content">
@@ -23,6 +27,8 @@ const Essay3 = () => {
         </p>
       </div>
     </div>
+    <Footer/>
+    </>
   );
 };
 

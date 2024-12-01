@@ -7,6 +7,8 @@ import essay3 from '../images/essay3.jpg';
 import essay4 from '../images/essay4.jpg';
 import essay5 from '../images/essay5.jpg';
 import essay6 from '../images/essay6.jpg';
+import Header from '../components/header'
+import Footer from '../components/footer'
 
 const Resources = () => {
   const navigate = useNavigate();
@@ -37,6 +39,8 @@ const Resources = () => {
   };
 
   return (
+    <>
+    <Header/>
     <div className="resources-container">
       <div className="resources-grid">
         <div className="resources-item" onClick={() => handleImageClick(0)}>
@@ -65,6 +69,8 @@ const Resources = () => {
         </div>
       </div>
     </div>
+    <Footer/>
+    </>
   );
 };
 

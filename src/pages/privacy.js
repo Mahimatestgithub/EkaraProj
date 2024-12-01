@@ -1,8 +1,12 @@
 import React from 'react';
 import '../styles/privacy.css';
+import Header from '../components/header'
+import Footer from '../components/footer'
 
 const Privacy = () => {
   return (
+    <>
+    <Header/>
     <div className="main-content">
       <h1><span>Legal</span></h1>
       <hr />
@@ -56,6 +60,8 @@ const Privacy = () => {
         </p>
       </section>
     </div>
+    <Footer/>
+    </>
   );
 };
 

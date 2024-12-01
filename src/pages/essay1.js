@@ -1,8 +1,12 @@
 import React from 'react';
 import '../styles/essay1.css';
+import Header from '../components/header'
+import Footer from '../components/footer'
 
 const Essay1 = () => {
   return (
+    <>
+    <Header/>
     <div className="essay1-container">
       <h1>Are You a Founder or Just an Idea Person?</h1><hr></hr>
       <div className="essay-content">
@@ -17,6 +21,8 @@ const Essay1 = () => {
         </p>
       </div>
     </div>
+    <Footer/>
+    </>
   );
 };
 

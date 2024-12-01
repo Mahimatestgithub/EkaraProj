@@ -1,9 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 import '../styles/apply1.css';
+import Header from '../components/header'
+import Footer from '../components/footer'
 
 function Apply1() {
   return (
+    <>
+    <Header/>
     <main>
       <section className="apply-section">
         <h1>Apply <span>to this program</span></h1>
@@ -29,6 +33,8 @@ function Apply1() {
         <p>The main mission of Ekara Financials is to help startups launch and grow successfully. When companies come to Ekara Financials, they’re at various stages—some are just getting started, while others may already be a year or more into their journey. Regardless of their starting point, the objective is to ensure they are significantly stronger and more prepared after three months of support.</p>
       </section>
     </main>
+    <Footer/>
+    </>
   );
 }
 

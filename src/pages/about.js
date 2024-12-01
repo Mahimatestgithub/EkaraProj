@@ -1,8 +1,12 @@
 import React from "react";
+import Header from '../components/header'
+import Footer from '../components/footer'
 import "../styles/about.css"; // Import your CSS for the About page
 
 function About() {
   return (
+    <>
+    <Header/>
     <div>
       <div className="main-content">
         <h1>
@@ -62,6 +66,8 @@ function About() {
 
       
     </div>
+    <Footer/>
+    </>
   );
 }
 

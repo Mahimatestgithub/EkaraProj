@@ -1,6 +1,8 @@
 
 import React from 'react';
 import '../styles/library.css';
+import Header from '../components/header'
+import Footer from '../components/footer'
 
 // Import each image and video explicitly
 import thumbnail1 from '../images/image thumbnail 1.png';
@@ -52,6 +54,8 @@ const videos = [
 
 const Library = () => {
   return (
+    <>
+    <Header/>
     <div>
       <div className="library-header">
         <h2>
@@ -72,6 +76,8 @@ const Library = () => {
         ))}
       </div>
     </div>
+    <Footer/>
+    </>
   );
 };
 

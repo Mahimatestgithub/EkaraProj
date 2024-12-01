@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios"; // Import axios for API calls
 import '../styles/apply2.css'; // Import your CSS file
+import Header from '../components/header'
+import Footer from '../components/footer'
 
 function Apply2() {
   // States for form fields
@@ -80,6 +82,8 @@ function Apply2() {
   };
 
   return (
+    <>
+    <Header/>
     <div>
       <main>
         <h1>Apply to this program</h1>
@@ -161,6 +165,8 @@ function Apply2() {
         </section>
       </main>
     </div>
+    <Footer/>
+    </>
   );
 }
 
